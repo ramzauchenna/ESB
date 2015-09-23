@@ -1,0 +1,42 @@
+{
+  "name": "esb",
+  "version": "1.0.0",
+  "description": "Node api for conecting to twiter",
+  "main": "index.js",
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ramzauchenna/swarm-twitter-client.git"
+  },
+  "keywords": [
+    "npm"
+  ],
+  "dependencies" : {
+    "swarmcore"     :    ">=2.2.6",
+    "acl-magic"    :     ">=1.0.10",
+    "apersistence" :      ">=1.0.24",
+    "semantic-firewall" : ">=0.5.1",
+    "dateformat"      : ">=1.0.11",
+    "commander"       :   ">=2.8.1",
+    "moment"        : ">=2.10.3",
+    "rts"       :">=0.0.0",
+    "tmp"       :">=0.0.0",
+    "express" :">=0.0.0",
+    "twitter" :">=0.0.0",
+    "request-promise" : ">=0.0.0",
+    "bluebird" : ">=0.0.0",
+    "uid" : ">=0.0.0"
+  },
+  "author": "Uchenna Okafor",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ramzauchenna/swarm-twitter-client/issues"
+  },
+  "homepage": "https://github.com/ramzauchenna/swarm-twitter-client#readme"
+}
