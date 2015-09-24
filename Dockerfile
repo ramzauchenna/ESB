@@ -1,4 +1,4 @@
-FROM  ubuntu:14.04
+FROM  centos:centos7
 RUN yum install -y epel-release
 RUN  yum install -y nodejs
 RUN   yum install -y npm
