@@ -7,7 +7,7 @@ COPY . /ESB
 RUN cd /ESB; npm install; npm dedupe
 RUN npm install http-server -g
 EXPOSE  8000 8080
-CMD ["/bin/bash", "/opt/aws/opsworks/current/site-cookbooks/container/start.sh"]
+CMD ["/bin/bash", "/home/ubuntu/ESB/container/start.sh"]
 
 
 
