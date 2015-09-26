@@ -7,7 +7,7 @@ var twitterSwan =
     vars:{
 
     },
-    start:function(details, id, isTrue){
+    start:function(details){
         this.details = details;
         this.id = id;
         this.swarm('processAction');
@@ -28,7 +28,7 @@ var twitterSwan =
                 self.swarm('returnTweet')
             }).swait(promise, function(err){
                     console.log("New error is", err);
-                    self.error = err[0]
+                    self.error = err[0];
                     self.swarm('reportError');
                 });
         }

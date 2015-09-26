@@ -27,7 +27,8 @@
                         {"core":"etc/adapters/DefaultLogger.js",                     "enabled":true, "step":2},
                         {"node":"adapters/argsDemo.js",                             "args":[], "enabled":false  , "step":4},
                         {"core":"etc/adapters/WSServer.js",                          "enabled":true  , "step":9},
-                        {"node":"myesb/adapters/TwitterAdapter.js",                          "enabled":true  , "step":9}
+                        {"node":"myesb/adapters/TwitterAdapter.js",                          "enabled":true  , "step":9},
+                        {"node":"myesb/adapters/WebAdapter.js",                          "enabled":true  , "step":10}
             ]
    },
   "ClientAdapter":{
@@ -42,7 +43,7 @@
   },
   "WSServer":{
            "host":"0.0.0.0",
-           "port":"8080"
+           "port":"9000"
   }
 
 }
