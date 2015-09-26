@@ -8,7 +8,7 @@ RUN cd /ESB; npm install; npm dedupe
 RUN npm install http-server -g
 EXPOSE  8080
 CMD ["/bin/bash", "/ESB/container/start.sh"]
-CMD ["node", "/src/index.js"]
+CMD ["node", "/ESB/index.js"]
 
 
 
