@@ -10,7 +10,7 @@ var Promise = require("bluebird");
 var uid = require("uid");
 var webStore =  {}
 
-var port = 3020;
+var port = 8000;
 app.listen(port, function(){
     console.log("NAV Adapter connected and Listening at port %s", port);
 });
