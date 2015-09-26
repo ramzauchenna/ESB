@@ -3,7 +3,10 @@ var core = require ("swarmcore");
 thisAdapter = core.createAdapter("WebAdapter");
 
 var express = require('express');
+var bodyParser = require('body-parser')
 var app = express();
+var jsonParser = bodyParser.json()
+
 var Twitter = require('twitter');
 var rp = require('request-promise');
 var Promise = require("bluebird");
@@ -86,9 +89,8 @@ notifyOnError = function(error, id){
     }
 };
 
-app.post('/post-tweet', function (req, res) {
-    console.log('query is', req);
-    console.log('data is', JSON.stringify(req.route.stack));
+app.post('/post-tweet', jsonParser, function (req, res) {
+    console.log('query is', req.body);
     var id = uid();
     var objectType = {
         id: id,
