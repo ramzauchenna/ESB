@@ -6,11 +6,8 @@ RUN   yum install -y redis
 COPY . /ESB
 RUN cd /ESB; npm install; npm dedupe
 RUN npm install http-server -g
-EXPOSE  80
+EXPOSE  8000 8080
 CMD ["/bin/bash", "/ESB/container/start.sh"]
-
-
-
 
 
 
