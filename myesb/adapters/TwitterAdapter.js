@@ -38,12 +38,6 @@ postNewTweetToClient = function(tweet){
 };
 
 
-returnTweets = function(tweet){
-    response.push(tweet)
-};
-
-
-
 post_tweet = function (params, id, callback) {
     return new Promise(function(resolve,reject){
         client.post('statuses/update', params, function(error, tweets, response){
@@ -62,6 +56,40 @@ post_tweet = function (params, id, callback) {
     });
 };
 
+errorTweet = function(tweet){
+    console.log("Error processing tweet")
+};
+
+
+postNewTweet = function (tweet, username, channel, callback) {
+    var payload = {
+        text: tweet.text,
+        channel: channel,
+        username: username
+    };
+    console.log("User Name is", username);
+    var uri = "https://hooks.slack.com/services/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?payload=" + JSON.stringify(payload);
+    console.log("Promise Start", tweet + uri);
+    return new Promise(function(resolve,reject) {
+        rp.post(uri, function (err, response, body) {
+            if (err) {
+                console.log(err);
+                callback(err, null);
+                return reject(err)
+            }else{
+                console.log(body);
+                console.log("body is", body);
+                callback(null, body);
+                resolve(body)
+            }
+        });
+    });
+};
+
+returnTweets = function(tweet){
+    console.log("tweet Sent to slack")
+};
+
 startTweet = function (tweet, id, callback){
     var tweet_details;
     tweet_details = {
@@ -76,40 +104,6 @@ startTweet = function (tweet, id, callback){
 
 
 
-postNewTweet = function (tweet) {
-    var params = JSON.stringify(tweet);
-    var options = {
-        uri : "https://hooks.slack.com/services/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",
-        method : 'POST'
-    };
-    rp(options)
-        .then(function (response) {
-            console.log("Tweet Sent to slack");
-        })
-        .catch(console.error)
-}
-
-
-
-/*app.get('/post-tweets', function (req, res) {
-    var tweet_details;
-    tweet_details = {
-        status: req.query.status
-    };
-    var id = uid();
-    var objectType = {
-        id: id,
-        res: res
-    }
-    store[objectType.id] = objectType
-
-    process_swarm = function(tweet_details, id) {
-        start_post_tweet_swam(tweet_details, id)
-    };
-    process_swarm(tweet_details, id);
-    /!*res.send({status: "Swan Started"})*!/
-
-});*/
 
 
 

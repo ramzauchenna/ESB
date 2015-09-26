@@ -21,51 +21,24 @@ start_post_tweet_swam = function(details, id) {
     this.startSwarm("webclient.js", "start", details, id, true);
 };
 
+start_post_slack_swarm = function(details) {
+    this.startSwarm("posttweet.js", "start", details, true);
+};
+
+
 start_get_tweet_swam = function(details) {
     this.startSwarm("webclient.js", "start", details,true);
 };
 
 
-/*postNewTweet = function (tweet, id, callback) {
-    return new Promise(function(resolve,reject) {
-        var uri = "http://52.89.182.110//post-tweets?status=" + tweet;
-        console.log("Promise Start", tweet);
-        rp.get(uri, function (err, response, body) {
-            if (err) {
-                console.log(err);
-                callback(err, null);
-                return reject(err)
-            }else{
-                console.log(body);
-                console.log("body is", body);
-                callback(null, body);
-                resolve(body)
-            }
-        });
-    });
-};*/
 
-postNewTweet = function (tweet, id, callback) {
-
-};
-
-receiveNewTweet = function (tweet, callback){
-    return new Promise(function(resolve, reject){
-      if (tweet[0].message){
-          callback(tweet, null );
-          return reject(tweet)
-      } else {
-         callback(null, tweet);
-         resolve(tweet);
-      }
-    });
-};
 
 notifyOnSuccess = function(tweet, id){
     var data = webStore[id];
+    console.log("Data is", data.user_name, data.channel_name);
+    this.startSwarm("posttweet.js", "start", tweet.text, data.user_name, data.channel_name);
     if(data){
-        data.res.send(tweet);
-        delete webStore[data.id]
+        data.res.send(tweet.text);
     }
 };
 
@@ -87,26 +60,38 @@ notifyOnError = function(error, id){
 };
 
 app.get('/post-tweet', function (req, res) {
-    console.log('query is', req.query);
+  var q = { token: 'QR4qtUOaxw5Muw5GKIJaac1k',
+        team_id: 'T03HJGNDA',
+        team_domain: 'c2g',
+        channel_id: 'C0BC5819P',
+        channel_name: 'td-test',
+        user_id: 'U0AKFRSJG',
+        user_name: 'ramzauchenna',
+        command: '/esbserver',
+        text: 'This should work' };
     var id = uid();
     var objectType = {
         id: id,
-        res: res
+        res: res,
+        user_name: q.user_name,
+        user_id: q.user_id,
+        channel_name: q.channel_name,
+        channel_id: q.channel_id,
+        token: q.token
     };
     webStore[objectType.id] = objectType;
 
     process_swarm = function(tweet, id) {
         start_post_tweet_swam(tweet, id)
     };
-    process_swarm(req.query.status, id)
+    process_swarm(q.text, id)
 });
 
-app.get('/receive-tweets', function (req, res) {
-    var tweet_details;
-    tweet_details = {
-        scree_name: req.query.screen_name
+app.get('/post-to-slack', function (req, res) {
+    process_slack_swarm = function(tweet) {
+        start_post_slack_swarm(tweet)
     };
-    start_get_tweet_swam(tweet_details);
+    process_slack_swarm(req.query.text)
 });
 
 

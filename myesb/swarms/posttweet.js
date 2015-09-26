@@ -7,51 +7,39 @@ var twitterSwan =
     vars:{
 
     },
-    start:function(details){
+    start:function(details, username, channel){
         this.details = details;
-        this.id = id;
+        this.username = username;
+        this.channel = channel
         this.swarm('processAction');
-    },
-    notify: function(tweet){
-        this.tweet = tweet
-        this.swarm('notifyNewTweet')
     },
     processAction:{
         node:"TwitterAdapter",
         code: function() {
-           var promise = post_tweet.async(this.details, this.id);
+           var promise = postNewTweet.async(this.details, this.username, this.channel);
            var self = this;
-           self.request_id = self.id;
             (function (tweets){
                 self.tweet = tweets;
                 console.log("We are here again"); //whatever
                 self.swarm('returnTweet')
             }).swait(promise, function(err){
                     console.log("New error is", err);
-                    self.error = err[0];
+                    self.error = err;
                     self.swarm('reportError');
                 });
         }
     },
-
-    notifyNewTweet: {
-        node: 'TwitterAdapter',
-        code: function(){
-            postNewTweet(this.tweet)
-        }
-    },
-
     reportError: {
         node: 'TwitterAdapter',
         code: function(){
-            errorTweet(this.error, this.request_id)
+            errorTweet(this.error)
         }
     },
 
     returnTweet: {
         node: 'TwitterAdapter',
         code: function() {
-            returnTweets(this.tweet, this.id)
+            returnTweets(this.tweet)
         }
     }
 

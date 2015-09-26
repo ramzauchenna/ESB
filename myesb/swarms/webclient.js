@@ -12,10 +12,6 @@ var webSwarm =
         this.id = id;
         this.swarm('processAction');
     },
-    receive: function(tweet){
-       this.tweet = tweet
-       this.swarm('receiveNewTweet')
-    },
     processAction:{
         node:"TwitterAdapter",
         code: function() {
@@ -48,32 +44,10 @@ var webSwarm =
         }
     },
 
-    receiveNewTweet: {
-        node: 'WebAdapter',
-        code: function(){
-        var promise  =  receiveNewTweet.async(this.tweet)
-            (function (tweet){
-                self.tweet = tweet;
-                self.swarm('returnTweet')
-            }).swait(promise, function(err){
-                console.log("New error is", err);
-                self.error = err[0];
-                self.swarm('reportError')
-            });
-        }
-    },
-
     reportError: {
         node: 'WebAdapter',
         code: function(){
             errorTweet(this.error)
-        }
-    },
-
-    returnTweet: {
-        node: 'WebAdapter',
-        code: function() {
-            returnTweets(this.tweet)
         }
     }
 
