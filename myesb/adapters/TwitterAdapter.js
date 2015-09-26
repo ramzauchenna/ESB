@@ -87,7 +87,7 @@ postNewTweet = function (tweet) {
             console.log("Tweet Sent to slack");
         })
         .catch(console.error)
-};
+}
 
 
 
