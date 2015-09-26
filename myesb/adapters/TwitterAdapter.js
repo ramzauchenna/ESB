@@ -7,9 +7,7 @@ var app = express();
 var Twitter = require('twitter');
 var rp = require('request-promise');
 var Promise = require("bluebird");
-var uid = require("uid");
-
-var store =  {}
+var https = require( 'https' );
 
 var client = new Twitter({
     consumer_key: 'gUc2YBeLC1tTFkZWuleyOjaql',
@@ -49,7 +47,6 @@ post_tweet = function (params, id, callback) {
             } else {
                 console.log("success twitter", tweets);
                 callback(null, tweets);
-                this.startSwarm("posttweet.js", "start", tweets)
                 resolve(tweets)
             }
         });
@@ -62,8 +59,8 @@ errorTweet = function(tweet){
 
 
 postNewTweet = function (tweet, username, channel, callback) {
-    var payload = {
-        text: tweet.text,
+/*    var payload = {
+        text: tweet,
         channel: channel,
         username: username
     };
@@ -76,14 +73,39 @@ postNewTweet = function (tweet, username, channel, callback) {
                 console.log(err);
                 callback(err, null);
                 return reject(err)
-            }else{
+            } else {
                 console.log(body);
-                console.log("body is", body);
                 callback(null, body);
                 resolve(body)
             }
         });
-    });
+    })*/
+
+    var options = {
+        hostname : 'hooks.slack.com' ,
+        path     : '/services/T03HJGNDA/B0BBYJ38B/N6IvJT9VKKc3adqyJVFs4iXO' ,
+        method   : 'POST'
+    };
+
+    var payload = {
+        text: tweet,
+        channel: channel,
+        username: username
+    };
+    console.log("Chanel is", payload.channel)
+    var req = https.request( options , function (res , b , c) {
+        res.setEncoding( 'utf8' );
+        res.on( 'data' , function (chunk) {
+            console.log(chunk)
+        } );
+    } );
+
+    req.on( 'error' , function (e) {
+        console.log( 'problem with request: ' + e.message );
+    } );
+
+    req.write( JSON.stringify( payload ) );
+    req.end()
 };
 
 returnTweets = function(tweet){

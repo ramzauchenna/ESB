@@ -32,7 +32,7 @@
     "request-promise" : ">=0.0.0",
     "bluebird" : ">=0.0.0",
     "uid" : ">=0.0.0",
-    "body-parser" : ">=0.0.0"
+    "https" : ">=0.0.0"
   },
   "author": "Uchenna Okafor",
   "license": "MIT",

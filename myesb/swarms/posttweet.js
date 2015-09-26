@@ -10,7 +10,7 @@ var twitterSwan =
     start:function(details, username, channel){
         this.details = details;
         this.username = username;
-        this.channel = channel
+        this.channel = channel;
         this.swarm('processAction');
     },
     processAction:{

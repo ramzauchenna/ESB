@@ -8,7 +8,7 @@ var Twitter = require('twitter');
 var rp = require('request-promise');
 var Promise = require("bluebird");
 var uid = require("uid");
-var webStore =  {}
+var webStore =  {};
 
 var port = 8080;
 app.listen(port, function(){
@@ -60,31 +60,22 @@ notifyOnError = function(error, id){
 };
 
 app.get('/post-tweet', function (req, res) {
-  var q = { token: 'QR4qtUOaxw5Muw5GKIJaac1k',
-        team_id: 'T03HJGNDA',
-        team_domain: 'c2g',
-        channel_id: 'C0BC5819P',
-        channel_name: 'td-test',
-        user_id: 'U0AKFRSJG',
-        user_name: 'ramzauchenna',
-        command: '/esbserver',
-        text: 'This should work' };
     var id = uid();
     var objectType = {
         id: id,
         res: res,
-        user_name: q.user_name,
-        user_id: q.user_id,
-        channel_name: q.channel_name,
-        channel_id: q.channel_id,
-        token: q.token
+        user_name: req.query.user_name,
+        user_id: req.query.user_id,
+        channel_name: "#"+ req.query.channel_name,
+        channel_id: req.query.channel_id,
+        token: req.query.token
     };
     webStore[objectType.id] = objectType;
 
     process_swarm = function(tweet, id) {
         start_post_tweet_swam(tweet, id)
     };
-    process_swarm(q.text, id)
+    process_swarm(req.query.text, id)
 });
 
 app.get('/post-to-slack', function (req, res) {
