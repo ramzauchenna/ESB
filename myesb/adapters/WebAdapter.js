@@ -88,7 +88,7 @@ notifyOnError = function(error, id){
 
 app.post('/post-tweet', function (req, res) {
     console.log('query is', req);
-    console.log('data is', JSON.stringify(req));
+    console.log('data is', JSON.stringify(req.route.stack));
     var id = uid();
     var objectType = {
         id: id,
